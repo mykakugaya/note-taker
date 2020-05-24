@@ -1,5 +1,9 @@
-var notes = require("../db/db.json");
-var fs = require("fs");
+const notes = require("../db/db.json");
+const fs = require("fs");
+const path = require("path");
+
+const db_dir = path.resolve(__dirname, "db");
+const dbPath = path.join(db_dir, "db.json");
 
 module.exports = function(app) {
     // API GET Request
@@ -9,22 +13,25 @@ module.exports = function(app) {
 
     // API POST Request
     app.post("/api/notes", function(req, res) {
+        req.body.id = `${notes.length}`;
         notes.push(req.body);
         res.json(true);
     });
 
     //API DELETE Request
     app.delete("/api/notes/:id", function(req, res) {
-        var selectedId = req.params.id;
+        const selectedId = req.params.id;
 
-        for (var i = 0; i < notes.length; i++) {
+        for (let i = 0; i < notes.length; i++) {
             if (selectedId === notes[i].id) {
-                //New notes array without selected ID object
-                var newNotes = notes.filter(item => item.id !== selectedId);
+                //Create new notes array without selected ID object
+                let newNotes = notes.filter(item => item.id !== selectedId);
+                //Reassign IDs
+                for (let j=0; j<newNotes.length; j++) {
+                    newNotes[j].id = j;
+                }
                 //Rewrite new notes to db file
-                fs.writeFile("db.json", newNotes, function(err) {
-                    if (err) throw err;
-                });
+                fs.writeFile(dbPath, newNotes);
                 return res.json(true);
             }
         };
