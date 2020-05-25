@@ -1,8 +1,8 @@
-const notes = require("../db/db.json");
+let notes = require("../db/db.json");
 const fs = require("fs");
 const path = require("path");
 
-const db_dir = path.resolve(__dirname, "db");
+const db_dir = path.resolve(__dirname, "../db");
 const dbPath = path.join(db_dir, "db.json");
 
 module.exports = function(app) {
@@ -20,12 +20,13 @@ module.exports = function(app) {
 
     //API DELETE Request
     app.delete("/api/notes/:id", function(req, res) {
-        const selectedId = req.params.id;
-
+        const deletedId = req.params.id;
         for (let i = 0; i < notes.length; i++) {
-            if (selectedId === notes[i].id) {
+            if (deletedId === notes[i].id) {
                 //Create new notes array without selected ID object
-                let newNotes = notes.filter(item => item.id !== selectedId);
+                let newNotes = notes.filter(item => item.id !== deletedId);
+                // notes.splice(deletedId, 1);
+
                 //Reassign IDs
                 for (let j=0; j<newNotes.length; j++) {
                     newNotes[j].id = j;
@@ -35,7 +36,7 @@ module.exports = function(app) {
                 return res.json(true);
             }
         };
-        //If id doesn't exist, return false
+        // If id doesn't exist, return false
         return res.json(false);
     });
 };

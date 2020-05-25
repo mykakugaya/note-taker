@@ -37,8 +37,8 @@ const renderActiveNote = () => {
   $saveNoteBtn.hide();
 
   if (activeNote.id) {
-    $noteTitle.attr("readonly", true);
-    $noteText.attr("readonly", true);
+    $noteTitle.attr("readonly", false);
+    $noteText.attr("readonly", false);
     $noteTitle.val(activeNote.title);
     $noteText.val(activeNote.text);
   } else {
