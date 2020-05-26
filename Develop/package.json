@@ -1,14 +1,14 @@
 {
   "name": "note-taker",
   "version": "1.0.0",
-  "description": "",
+  "description": "notetaking application to create, save, and delete notes",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "restart": "nodemon server.js"
   },
-  "author": "",
+  "author": "Myka Kugaya",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
