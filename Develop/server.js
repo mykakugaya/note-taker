@@ -1,6 +1,6 @@
 var express = require("express");
 var app = express();
-var PORT = process.env.PORT || 8080;
+var PORT = process.env.PORT || 3000;
 
 //Makes sure CSS loads with Notes page
 app.use(express.static("public"));
